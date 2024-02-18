@@ -1,0 +1,64 @@
+coco Logic
+
+state persistent:
+    campaigns []Campaign
+    nextCampaignId U64 
+    owner Address
+
+
+class Campaign:
+    field id U64
+    field title String
+    field targetAmount U64
+    field currentAmount U64
+    field completionDate I64 
+    field creator Address
+    field active Bool   
+    field contributors Map[Address]U64 
+
+
+endpoint deployer InitOwner!():
+    mutate Address(Sender) -> Logic.State.owner
+    // Set initial nextCampaignId to 0 explicitly if needed here or assume auto-initialization to 0
+
+
+func onlyOwner():
+    observe owner <- Logic.State.owner:
+        if(Address(Sender) != owner):
+            throw "Not an Owner"
+
+// func isActive(completionDate I64 , campaigns []Campaign):
+//     if(completionDate < Env.Timestamp()):
+//         throw "Campaign ended"
+func isActive(campaign Campaign) -> (active Bool):
+    yield active campaign.completionDate > Env.Timestamp() && campaign.active
+
+
+endpoint invokable CreatCampaign!(title String, targetAmount U64) -> (CreatedCampaign Campaign):
+    onlyOwner()
+    mutate campaigns <- Logic.State.campaigns:
+        var newCampaign = Campaign{
+            id: len(campaigns),
+            title: title,
+            targetAmount: targetAmount
+        }
+
+        campaigns = append(campaigns, newCampaign)
+        yield CreatedCampaign newCampaign
+
+
+endpoint invokable Contribute!(id U64, amount U64) -> ():
+    observe campaigns <- Logic.State.campaigns:
+        var campin = campaigns[id]
+        // var AllCampaigns = campaigns
+        var active Bool = (active) <- isActive(campaign: campin)
+        if !active:
+            throw "Campaign is not active or deadline has passed."
+        else:
+
+            mutate Amt <- Logic.State.campaigns:
+                Amt[id].currentAmount+= amount
+
+
+endpoint invokable GetCampaign(campaigns []Campaign) -> (ActiveCampagins []Campaign):
+    observe campaigns <- Logic.State.campaigns

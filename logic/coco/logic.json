@@ -1,0 +1,510 @@
+{
+  "syntax": "0.1.0",
+  "engine": {
+    "kind": "PISA",
+    "flags": []
+  },
+  "elements": [
+    {
+      "ptr": 0,
+      "kind": "constant",
+      "data": {
+        "type": "string",
+        "value": "0x064e6f7420616e204f776e6572"
+      }
+    },
+    {
+      "ptr": 1,
+      "kind": "constant",
+      "data": {
+        "type": "string",
+        "value": "0x0643616d706169676e206973206e6f7420616374697665206f7220646561646c696e6520686173207061737365642e"
+      }
+    },
+    {
+      "ptr": 2,
+      "deps": [
+        3
+      ],
+      "kind": "typedef",
+      "data": "[]Campaign"
+    },
+    {
+      "ptr": 3,
+      "kind": "class",
+      "data": {
+        "name": "Campaign",
+        "fields": [
+          {
+            "slot": 0,
+            "label": "id",
+            "type": "u64"
+          },
+          {
+            "slot": 1,
+            "label": "title",
+            "type": "string"
+          },
+          {
+            "slot": 2,
+            "label": "targetAmount",
+            "type": "u64"
+          },
+          {
+            "slot": 3,
+            "label": "currentAmount",
+            "type": "u64"
+          },
+          {
+            "slot": 4,
+            "label": "completionDate",
+            "type": "i64"
+          },
+          {
+            "slot": 5,
+            "label": "creator",
+            "type": "address"
+          },
+          {
+            "slot": 6,
+            "label": "active",
+            "type": "bool"
+          },
+          {
+            "slot": 7,
+            "label": "contributors",
+            "type": "map[address]u64"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "ptr": 4,
+      "deps": [
+        3
+      ],
+      "kind": "state",
+      "data": {
+        "kind": "persistent",
+        "fields": [
+          {
+            "slot": 0,
+            "label": "campaigns",
+            "type": "[]Campaign"
+          },
+          {
+            "slot": 1,
+            "label": "nextCampaignId",
+            "type": "u64"
+          },
+          {
+            "slot": 2,
+            "label": "owner",
+            "type": "address"
+          }
+        ]
+      }
+    },
+    {
+      "ptr": 5,
+      "deps": [
+        4
+      ],
+      "kind": "routine",
+      "data": {
+        "name": "InitOwner!",
+        "kind": "deployer",
+        "accepts": [],
+        "returns": [],
+        "executes": {
+          "bin": [
+            115,
+            0,
+            73,
+            0,
+            0,
+            129,
+            0,
+            2
+          ]
+        }
+      }
+    },
+    {
+      "ptr": 6,
+      "deps": [
+        0,
+        4
+      ],
+      "kind": "routine",
+      "data": {
+        "name": "onlyOwner",
+        "kind": "local",
+        "accepts": [],
+        "returns": [],
+        "executes": {
+          "bin": [
+            128,
+            0,
+            2,
+            115,
+            1,
+            73,
+            1,
+            1,
+            70,
+            0,
+            1,
+            0,
+            98,
+            0,
+            0,
+            98,
+            0,
+            0,
+            17,
+            1,
+            11,
+            3,
+            1,
+            0,
+            17,
+            0,
+            0,
+            16,
+            0,
+            0,
+            65,
+            0,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "ptr": 7,
+      "deps": [
+        3
+      ],
+      "kind": "routine",
+      "data": {
+        "name": "isActive",
+        "kind": "local",
+        "accepts": [
+          {
+            "slot": 0,
+            "label": "campaign",
+            "type": "Campaign"
+          }
+        ],
+        "returns": [
+          {
+            "slot": 0,
+            "label": "active",
+            "type": "bool"
+          }
+        ],
+        "executes": {
+          "bin": [
+            41,
+            0,
+            1,
+            98,
+            0,
+            0,
+            4,
+            1,
+            0,
+            81,
+            2,
+            1,
+            4,
+            113,
+            3,
+            10,
+            4,
+            82,
+            4,
+            0,
+            3,
+            10,
+            3,
+            13,
+            3,
+            16,
+            4,
+            81,
+            4,
+            3,
+            0,
+            69,
+            2,
+            2,
+            4,
+            96,
+            0,
+            0,
+            2,
+            98,
+            2,
+            0,
+            17,
+            3,
+            17,
+            3,
+            3,
+            2,
+            81,
+            1,
+            1,
+            6,
+            96,
+            0,
+            0,
+            1,
+            1,
+            5,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "ptr": 8,
+      "deps": [
+        3,
+        6,
+        4
+      ],
+      "kind": "routine",
+      "data": {
+        "name": "CreatCampaign!",
+        "kind": "invokable",
+        "accepts": [
+          {
+            "slot": 0,
+            "label": "title",
+            "type": "string"
+          },
+          {
+            "slot": 1,
+            "label": "targetAmount",
+            "type": "u64"
+          }
+        ],
+        "returns": [
+          {
+            "slot": 0,
+            "label": "CreatedCampaign",
+            "type": "Campaign"
+          }
+        ],
+        "executes": {
+          "bin": [
+            10,
+            0,
+            17,
+            1,
+            6,
+            12,
+            0,
+            1,
+            0,
+            128,
+            0,
+            0,
+            17,
+            1,
+            3,
+            40,
+            1,
+            1,
+            80,
+            2,
+            0,
+            82,
+            1,
+            0,
+            2,
+            4,
+            2,
+            0,
+            82,
+            1,
+            1,
+            2,
+            4,
+            2,
+            1,
+            82,
+            1,
+            2,
+            2,
+            36,
+            2,
+            0,
+            87,
+            2,
+            1,
+            36,
+            0,
+            2,
+            5,
+            1,
+            0,
+            129,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "ptr": 9,
+      "deps": [
+        1,
+        7,
+        4
+      ],
+      "kind": "routine",
+      "data": {
+        "name": "Contribute!",
+        "kind": "invokable",
+        "accepts": [
+          {
+            "slot": 0,
+            "label": "id",
+            "type": "u64"
+          },
+          {
+            "slot": 1,
+            "label": "amount",
+            "type": "u64"
+          }
+        ],
+        "returns": [],
+        "executes": {
+          "bin": [
+            128,
+            0,
+            0,
+            4,
+            1,
+            0,
+            83,
+            0,
+            0,
+            1,
+            10,
+            2,
+            82,
+            2,
+            0,
+            0,
+            17,
+            0,
+            7,
+            12,
+            0,
+            0,
+            2,
+            81,
+            0,
+            0,
+            0,
+            98,
+            0,
+            0,
+            98,
+            0,
+            0,
+            17,
+            2,
+            17,
+            3,
+            2,
+            0,
+            17,
+            0,
+            1,
+            16,
+            0,
+            0,
+            65,
+            0,
+            17,
+            2,
+            27,
+            2,
+            2,
+            1,
+            128,
+            0,
+            0,
+            83,
+            2,
+            0,
+            1,
+            81,
+            3,
+            2,
+            3,
+            4,
+            4,
+            1,
+            101,
+            4,
+            3,
+            4,
+            36,
+            3,
+            4,
+            82,
+            2,
+            3,
+            3,
+            84,
+            0,
+            1,
+            2,
+            129,
+            0,
+            0,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "ptr": 10,
+      "deps": [
+        3,
+        4
+      ],
+      "kind": "routine",
+      "data": {
+        "name": "GetCampaign",
+        "kind": "invokable",
+        "accepts": [
+          {
+            "slot": 0,
+            "label": "campaigns",
+            "type": "[]Campaign"
+          }
+        ],
+        "returns": [
+          {
+            "slot": 0,
+            "label": "ActiveCampagins",
+            "type": "[]Campaign"
+          }
+        ],
+        "executes": {
+          "bin": []
+        }
+      }
+    }
+  ]
+}
